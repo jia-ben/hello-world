@@ -1,5 +1,5 @@
 # hello-world
-这是LiuJiaben的第一个存储库，Repository Name = hello-world.
+这是jia-ben的第一个存储库，Repository Name = hello-world.
 
 # Git教程
 
