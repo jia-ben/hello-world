@@ -169,7 +169,7 @@ $ git diff --staged
 
 ### 2.8 移出文件
 
-1. 删除文件需要将文件取消跟踪,并提交.
+1. 删除文件需要将文件**取消跟踪**,并**提交**.
 2. 使用`git rm file`来取消跟踪,并从工作目录删除.
 
 1. 若从目录中**手动删除**文件,可以在`git status`中看到文件处于**未暂存**.
@@ -180,4 +180,63 @@ $ git diff --staged
 
 #### 移出但不删除
 
-想让文件保留在磁盘，但是并不想让 Git 继续跟踪.使用
+想让文件保留在磁盘，但是并不想让 Git 继续跟踪.使用`-cached`
+> $ git rm --cached READ
+
+
+### 2.9 移动文件
+Git 并不显式跟踪文件移动操作.如果在 Git 中重命名了某个文件,仓库中存储的元数
+据并不会体现出这是一次改名操作.
+既然如此，当你看到 Git 的 mv 命令时一定会困惑不已。 要在 Git 中对文件改名，可以这么做：
+> $ git mv file_from file_to
+>
+相当于运行三条命令:
+> $ mv README.md README
+> 
+> $ git rm README.md
+> 
+> $ git add READM
+
+## 3 提交历史
+
+### 3.1 log
+使用`git log` 回顾提交历史:
+```
+ $ git log
+    commit ca82a6dff817ec66f44342007202690a93763949  
+    Author: Scott Chacon <schacon@gee-mail.com>
+    Date:   Mon Mar 17 21:52:11 2008 -0700
+ 
+        changed the version numb
+ 
+ ......
+ ```
+不传入参数的情况下，`git log`会按时间列出所有提交记录.并且列出:校验和,作者,电子邮件,时间,提交说明.
+
+### --patch
+使用`-p`显示提交引入的差异,也可以限制入日志数量.
+> $ git log --patch -2
+>
+> 显示最近两次提交,并列出`diff`内容.
+
+### --stat
+使用`--stat`查看简略信息.
+> $ git log --stat
+>
+> #会显示出每次提交修改过的文件
+>
+
+### --pretty
+可以自动逸输出格式
+> $ git log --pretty=online
+> 
+> $ git log --pretty=short
+> 
+> $ git log --pretty=full,fuller
+> 
+> $ git log --pretty=format:"%h - %an, %ar : %s"
+
+![alt text](image.png)
+
+![alt text](image-1.png)
+
