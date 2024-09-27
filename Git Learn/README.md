@@ -63,7 +63,7 @@ $ git init
 $ git clone https://github.com/jia-ben/hello-world mylib
 ```
 
-### 2.2 工作目录
+#### 工作目录
 
 **工作目录中**的文件是仓库的副本。
 其中的文件分为
@@ -84,7 +84,7 @@ $ git status
     nothing to commit, working directory clean
 ```
 
-### 2.3 add
+### 2.2 add
 
 `git add`指令可以：
 - **跟踪**新文件
@@ -96,7 +96,7 @@ $ git add new_file
 $ git add modified_file
 $ git add conflict_file
 ```
-### 2.4 状态
+#### 状态
 
 status可以看工作目录的状态信息，使用`-s`简化该信息。
 ```
@@ -105,7 +105,7 @@ $ git status -s
 $ git status --short
 ```
 
-### 2.5 忽略文件
+####  忽略文件
 
 有时候一些中间编译文件不需要被Git跟踪，通过创建一个名为`.gitignore`的文件，列出要忽略的文件的模式。
 ```
@@ -137,7 +137,7 @@ doc/**/*.pd
 > 若仓库有多个ignore文件
 > 根目录下的.ignore文件递归到整个仓库，子目录下的.ignore只对子目录有效。
 
-### 2.6 查看修改
+#### 查看修改
 
 ```
 #查看工作目录的文件和暂存区的差异
@@ -146,7 +146,7 @@ $ git diff
 $ git diff --staged
 ```
 
-### 2.7 提交修改
+#### 提交修改
 
 ```
 #使用add暂存要提交的修改
@@ -159,7 +159,7 @@ $ git diff --staged
     $ git commit -m "your description"
 #此时你的暂存区内容已被记录
 ```
-#### 不暂存就提交
+##### 不暂存就提交
 
 使用`-a`参数在提交时自动暂存所有已修改文件.
 ```
@@ -167,7 +167,7 @@ $ git diff --staged
     $ git commit -a -m "your description"
 ```
 
-### 2.8 移出文件
+##### 移出文件
 
 1. 删除文件需要将文件**取消跟踪**,并**提交**.
 2. 使用`git rm file`来取消跟踪,并从工作目录删除.
@@ -178,13 +178,13 @@ $ git diff --staged
 
 1. 如果文件已经处于**暂存区**,则需要使用`-f`参数.
 
-#### 移出但不删除
+##### 移出但不删除
 
 想让文件保留在磁盘，但是并不想让 Git 继续跟踪.使用`-cached`
 > $ git rm --cached READ
 
 
-### 2.9 移动文件
+##### 移动文件
 Git 并不显式跟踪文件移动操作.如果在 Git 中重命名了某个文件,仓库中存储的元数
 据并不会体现出这是一次改名操作.
 既然如此，当你看到 Git 的 mv 命令时一定会困惑不已。 要在 Git 中对文件改名，可以这么做：
@@ -197,9 +197,9 @@ Git 并不显式跟踪文件移动操作.如果在 Git 中重命名了某个文�
 > 
 > $ git add READM
 
-## 3 提交历史
+### 2.3 提交历史
 
-### 3.1 log
+#### log
 使用`git log` 回顾提交历史:
 ```
  $ git log
@@ -213,26 +213,24 @@ Git 并不显式跟踪文件移动操作.如果在 Git 中重命名了某个文�
  ```
 不传入参数的情况下，`git log`会按时间列出所有提交记录.并且列出:校验和,作者,电子邮件,时间,提交说明.
 
-### --patch
+#### --patch
 使用`-p`显示提交引入的差异,也可以限制入日志数量.
 > $ git log --patch -2
 >
 > 显示最近两次提交,并列出`diff`内容.
 
-### --stat
+#### --stat
 使用`--stat`查看简略信息.
 > $ git log --stat
 >
 > #会显示出每次提交修改过的文件
 >
 
-### --pretty
+#### --pretty
 可以自动逸输出格式
 > $ git log --pretty=online
 > 
-> $ git log --pretty=short
-> 
-> $ git log --pretty=full,fuller
+> $ git log --pretty=short,full,fuller
 > 
 > $ git log --pretty=format:"%h - %an, %ar : %s"
 
@@ -240,3 +238,25 @@ Git 并不显式跟踪文件移动操作.如果在 Git 中重命名了某个文�
 
 ![alt text](image-1.png)
 
+#### --graph
+
+在使用`online`和`format`参数时,结合`--graph`可以使用制表符输出信息.
+
+#### --since
+使用`--since`和`--until`限制日志时间
+> 最近两周的所有提交
+> 
+> $ git log --since=2.weeks
+
+结合`--auther`和`--grep`进行模式匹配
+
+#### -S
+`-S`参数接收一个字符串参数,只显示涉及到该字符串修改的提交.
+
+#### -path
+???
+> 日志中的合并提交往往没有用处,使用`--no-merges`屏蔽显示.
+
+### 2.4 撤销
+
+#### 撤销
