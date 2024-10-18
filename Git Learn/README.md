@@ -1,6 +1,14 @@
 # hello-world
 这是jia-ben的第一个存储库，Repository Name = hello-world.
 
+# 0
+
+版本控制系统可以记录一个或若干个文件的变化,以便于将来查阅.
+除了软件源代码,任何类型的文件都可以进行版本控制.
+## RCS
+RCS(本地版本控制)通过保存补丁集(文件修改前后的变化),通过补丁计算出各个版本内容.
+### CVCS
+CVCS(集中式)
 # Git教程
 
 ## 1 开始
@@ -260,3 +268,87 @@ Git 并不显式跟踪文件移动操作.如果在 Git 中重命名了某个文�
 ### 2.4 撤销
 
 #### 撤销
+推荐使用vscode进行 历史记录 和 撤销操作。
+
+### 2.5 远程仓库
+
+若有分支疑问:请参考[Git分支](#GiBranch).
+
+#### clone自动添加
+1. 获取远程仓库
+```
+$ git clone url
+# 自动克隆的仓库,本地会有一个同名文件夹,内包含 .git 隐藏文件夹,供git工具使用.
+# Git自动将其添加为远程仓库,默认简写"origin"
+#
+```
+2. 查看已有仓库
+```
+$ git remote
+```
+3. 查看远程仓库的url及其本地Git简写
+```
+$ git remote -v
+```
+#### 手动添加
+```
+$ git remote add <shortname> <url>
+```
+> 命令行参数说明: <>参数占位符,必须输入该参数
+
+#### 拉取
+拉取远程仓库有,但是我没有的内容.拉取后数据下载到本地,但是不会更改当前工作内容,需要手动合并.
+```
+$ git fetch <remote url>
+#或者使用自定义的简写
+$ git fetch <shortname>
+# 默认的远程仓库简写为origin
+$ git fetch origin
+```
+#### 抓取并合并
+前提:设置了当前分支跟踪远程分支.(git clone的仓库会默认这样配置)
+```
+抓取 远程分支 且尝试合并到当前分支:
+$ git pull
+```
+#### 推送
+```
+将我的master分支推送到远程origin服务器.
+$ git push origin master
+```
+前提:已经抓取过最新的远程内容.尤其是多人合作时,若其他人推送过内容,你的push请求会被拒绝.
+
+#### 查看某个远程仓库
+```
+$ git remote show origin
+* remote origin
+  URL: https://github.com/my-org/complex-project
+  Fetch URL: https://github.com/my-org/complex-project
+  Push  URL: https://github.com/my-org/complex-project
+  HEAD branch: master
+  Remote branches:
+    master                           tracked
+    dev-branch                       tracked
+    markdown-strip                   tracked
+    issue-43                         new (next fetch will store in remotes/origin)
+    issue-45                         new (next fetch will store in remotes/origin)
+    refs/remotes/origin/issue-11     stale (use 'git remote prune' to remove)
+  Local branches configured for 'git pull':
+    dev-branch merges with remote dev-branch
+    master     merges with remote master
+  Local refs configured for 'git push':
+    dev-branch                     pushes to dev-branch                     (up to date)
+    markdown-strip                 pushes to markdown-strip                 (up to date)
+    master                         pushes to master                         (up to date)
+```
+会打印出远程仓库的url,分支的跟踪情况,已经过时的分支.
+并指出在某个分支使用`pull` `push`会操作的分支.
+
+### 2.6 标签
+
+### 2.7 别名
+
+## 3 分支 <a id="GiBranch"></a>
+
+### 3.1分支简介
+在Git中,
