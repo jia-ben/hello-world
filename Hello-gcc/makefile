@@ -11,14 +11,17 @@
 # 
 build : hello.exe
 
-hello.exe : ./Out/main.o ./Out/string2hex.o
-	gcc -o hello.exe ./Out/main.o ./Out/string2hex.o
+hello.exe : ./Out/main.o ./Out/string2hex.o ./Out/mb_crc16.o
+	gcc -o hello.exe ./Out/main.o ./Out/string2hex.o ./Out/mb_crc16.o
 
 ./Out/main.o : ./Code/main.c ./Code/string2hex.h
 	gcc -c ./Code/main.c -o ./Out./main.o -I ./Code
 
 ./Out/string2hex.o : ./Code/string2hex.c
 	gcc -c ./Code/string2hex.c -o ./Out./string2hex.o -I ./Code
+
+./Out/mb_crc16.o : ./Code/mb_crc16.c
+	gcc -c ./Code/mb_crc16.c -o ./Out./mb_crc16.o -I ./Code
 
 clean :
 	rm -path "D:\Git\hello\Out\*.o"
