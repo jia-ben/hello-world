@@ -154,18 +154,22 @@ $ git diff
 $ git diff --staged
 ```
 
-#### 提交修改
+#### 提交
 
 ```
 #使用add暂存要提交的修改
     $ git add file
+
 #使用status检查暂存状态,确保需要提交的修改已经暂存
     $ git status
+
 #使用commit提交,并启用编辑器编写说明
     $ git commit
+
 #使用参数`-m`直接添加提交信息
     $ git commit -m "your description"
-#此时你的暂存区内容已被记录
+
+#此时你的暂存区内容已被Git记录
 ```
 ##### 不暂存就提交
 
