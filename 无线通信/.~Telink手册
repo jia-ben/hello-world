@@ -1,0 +1,96 @@
+# LL
+
+## 状态机
+
+5种状态机，状态机的切换底层自动完成。API获取状态机的状态。
+
+~~~c
+u8 blc_ll_getCurrentState(void);
+~~~
+
+状态机初始化：
+
+~~~c
+void blc_ll_initBasicMCU (void);//MCU初始化-必须
+void blc_ll_initStandby_module (u8 *public_adr);//就绪态初始化-必须
+//其他状态机初始化-可选
+void blc_ll_initAdvertising_module(void);//广播
+void blc_ll_initConnection_module(void);//主从共用的连接态模块
+void blc_ll_initSlaveRole_module(void);//从机用的连接态模块
+...
+~~~
+
+状态机切换API:
+
+~~~c
+//IDLE<->ADV
+ bls_ll_setAdvEnable(1/0);
+~~~
+
+广播态与连接态切换:请求连接/断开连接/超时连接.
+
+## 时序
+
+程序=蓝牙协议栈程序+用户程序.
+
+蓝牙协议栈:处理协议栈的数据和事件,包含一些中断处理程序.
+
+1广播态:协议栈,在 **广播事件** 发送广播包,处理扫描响应/连接请求/DURATION_TIMEOUT?.
+
+2扫描态:在 **扫描事件** 收包,硬件实现.软件执行用户程序-检查FIFO,上传给host.
+
+~~~c
+API blc_ll_setScanParameter
+~~~
+
+3发起态:scan到blc_ll_createConnection指定的设备,发送 connection_request,进入连接态主机.
+
+4连接态从机:在 **连接事件** 快到时,系统时钟的中断设置RF收包.硬件自动收包和发包(ack).收发包结束,系统中断导出数据到FIFO.
+
+- 发给LL的控制命令,直接执行
+- 发给HOST的数据,上传host
+
+5就绪态:啥也不干.
+
+6多态:使用API,附加状态.
+
+## FIFO
+
+rx:收到的数据存在RXFIFO,有大小(推荐48)和数量(推荐8).
+
+>  防止溢出处理:接收器判断FIFO溢出,停止ACK,蓝牙协议支持重传.
+
+tx:缓存要发送的数据TXFIFO,有大小(默认48)数量(默认17/9).
+
+> 发送前,检查FIFO,预留1个FIFO防止边界问题(回复master的command)
+
+补充:SDK提供了overflow自动处理机制,提供moredata的控制api.
+
+# HCI
+
+如果 user 需要在 Host 或 App 层接收 Controller HCI event，⾸先需要注册 Controller HCI event 的 callback 函 数，其次需要将对应 event 的 mask 打开。
+
+~~~c
+typedef int (*hci_event_handler_t) (u32 h, u8 *para, int n);
+void blc_hci_registerControllerEventHandler(hci_event_handler_t handler);
+//h:标识符,区分自定义event
+//para:数据
+//n:数据长度
+~~~
+
+Telink支持大部分HCI LE ecent。少部分HCI event。
+
+除了核心规范规定义的HCI event，Telink定义私有的event，只在BLE slave使用。两种实现方式：
+
+- 每个event回调函数单独注册。
+- 所有回调函数一个入口，使用HCI event的API。
+
+推荐单独，函数原型：
+
+~~~c
+typedef void (*blt_event_callback_t)(u8 e, u8 *p, int n);
+//e:event number
+//p:底层回传的数据指针
+//n:所指数据有效长度
+~~~
+

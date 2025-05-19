@@ -45,9 +45,10 @@ $git config --global core.editor "Path:name.exe" -Command
 $ git help <verb>
 $ git <verb> --help
 $ man git-<verb>
+
+# 获取快速参考
+$ git <verb> -h    
 ```
-或者使用`-h` 获取快速参考
-` $ git add -h`
 
 #### 补充：
 
@@ -63,13 +64,6 @@ $ man git-<verb>
     > git clone 会复制仓库中的所有文件。
     >
     > clone 时更改本地仓库名: `$git clone <url> newname`
-
-```
-$ cd folder
-$ git init
-
-$ git clone https://github.com/jia-ben/hello-world mylib
-```
 
 #### 工作目录
 
@@ -197,8 +191,7 @@ $ git diff --staged
 
 
 ##### 移动文件
-Git 并不显式跟踪文件移动操作.如果在 Git 中重命名了某个文件,仓库中存储的元数
-据并不会体现出这是一次改名操作.
+Git 并不显式跟踪文件移动操作.如果在 Git 中重命名了某个文件,仓库中存储的元数据并不会体现出这是一次改名操作.
 既然如此，当你看到 Git 的 mv 命令时一定会困惑不已。 要在 Git 中对文件改名，可以这么做：
 > $ git mv file_from file_to
 >
@@ -242,7 +235,7 @@ Git 并不显式跟踪文件移动操作.如果在 Git 中重命名了某个文�
 可以自动逸输出格式
 > $ git log --pretty=online
 > 
-> $ git log --pretty=short,full,fuller
+> $ git log --pretty=short、full、fuller
 > 
 > $ git log --pretty=format:"%h - %an, %ar : %s"
 
@@ -276,7 +269,7 @@ Git 并不显式跟踪文件移动操作.如果在 Git 中重命名了某个文�
 
 ### 2.5 远程仓库
 
-若有分支疑问:请参考[Git分支](#GiBranch).
+若有分支疑问:请参考[3 Git分支](#GiBranch).
 
 #### clone自动添加
 1. 获取远程仓库
